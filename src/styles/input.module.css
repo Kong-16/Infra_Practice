@@ -1,0 +1,11 @@
+.input-label {
+  @apply text-slate-400 font-light py-2 box-border;
+}
+
+.input-box {
+  @apply h-10 w-full rounded-lg border-gray-200 border p-3;
+}
+
+.input-box:focus {
+  border: #3b82f6 solid;
+}

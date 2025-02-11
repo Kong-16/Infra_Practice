@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.main-page {
+  /* background-color: #e2e8f0; */
+  /* @apply bg-theme-color-100 */
+}
+
+.header-container {
+  @apply p-2 px-[2%] min-h-20 flex items-center border-b border-gray-200  text-black  overflow-visible w-screen bg-white;
+}
+
+.center-container {
+  @apply text-2xl font-medium;
+}
+
+.content-container {
+  padding: 0 5%;
+  margin-top: 2rem;
+}
+
+.link-highlight {
+  @apply px-16;
+  text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+.link-normal {
+  @apply px-16;
+}
+
+.link-normal:hover {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.icon {
+  @apply h-full min-w-12 w-12 mx-4;
+  fill: #f43f5e;
+}
+
+button {
+  @apply m-2 p-2 px-4 min-w-28 text-lg font-medium border border-theme-color-500 rounded-lg bg-white text-theme-color-500;
+}
+
+button:hover {
+  @apply bg-theme-color-600 rounded-lg border-theme-color-600 text-white;
+}
+
+.button-reverse {
+  @apply bg-theme-color-600 rounded-lg border-theme-color-600 text-white min-w-28;
+}
+
+.practice-button {
+  @apply h-[42px] w-32 font-medium text-[18px] flex items-center justify-center text-nowrap
+}
