@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { COGNITO_CONFIG } from '../constants';
-import { createErrorMessage } from './error';
+import { createErrorMessage } from './general';
 
 /**
  * @author 공민혁

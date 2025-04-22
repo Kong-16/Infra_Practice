@@ -1,3 +1,6 @@
+/**
+ * 로그인 후 진입하는 메인 페이지
+ */
 import Card from '../components/Card';
 import LogoButton from '../components/LogoButton';
 import Title from '../components/Title';
@@ -8,28 +11,20 @@ import { PracticeCard } from '../interfaces/card.types';
 const cardData: PracticeCard[] = [
   {
     id: 1,
-    title: 'AWS 인프라 자동화 실습',
+    title: 'Terraform과 Atlantis를 활용한 AWS 인프라 자동화 실습',
     description:
-      'AWS 인프라를 자동화하고, 보안을 강화하는 전체 프로세스를 학습합니다.',
-    active: false,
+      'GitLab, Atlantis, Terraform을 통합하여 AWS 인프라를 자동화하고, 보안을 강화하는 전체 프로세스를 학습합니다.',
   },
   {
     id: 2,
-    title: 'DevOps 파이프라인 구축 실습',
+    title: 'GitOps 기반의 컨테이너 환경 구축 실습',
     description:
-      '자동화된 테스트, 배포가 가능한 GitOps 기반 CI/CD 파이프라인을 구축하고 카나리 배포 전략을 통해 안전한 애플리케이션 배포를 학습합니다.',
-    active: false,
-  },
-  {
-    id: 3,
-    title: '데이터 파이프라인 구축 실습',
-    description: '설명입니다',
-    active: false,
+      ' Kubernetes 환경에서 GitLab Runner와 ArgoCD를 활용한 GitOps 기반 CI/CD 파이프라인을 구축하고, 무중단 배포를 실습합니다. 또한, Fluent Bit와 S3를 활용한 로그 통합 및 Prometheus와 Grafana를 이용한 모니터링 구성 방법을 학습합니다.',
   },
 ];
 
-function HomePage() {
-  const {userId} = useUserStore();
+const HomePage = () => {
+  const { userId } = useUserStore();
 
   const HomeHeader = () => (
     <div className="header-container w-screen px-10 fixed top-0">
@@ -49,7 +44,6 @@ function HomePage() {
         key={data.id}
         title={data.title}
         description={data.description}
-        active={data.active}
       />
     ));
 
@@ -61,6 +55,6 @@ function HomePage() {
       </div>
     </div>
   );
-}
+};
 
 export default HomePage;

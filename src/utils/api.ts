@@ -1,15 +1,21 @@
+/**
+ * api 함수 호출 및 전, 후 작업
+ * 매개변수 및 리턴 값 검증
+ * 오류 시 에러 throw 
+ */
 import { z } from 'zod';
 import apiInstance from '../apiInstance';
-import { createErrorMessage } from './error';
+import { createErrorMessage } from './general';
 import { StackStatusSchema } from '../interfaces/stack.types';
 import {
   StackInfoResponse,
   StackInfoResponseSchema,
   UrlResponseSchema,
-} from '../interfaces/api.types';
+} from '../interfaces/apiResponse.types';
 import axios from 'axios';
 
 const idSchema = z.string().nonempty();
+
 /**
  * 사용자에게 실습번호에 해당하는 실습 환경 생성
  * @param practiceId 실습 번호
@@ -28,6 +34,7 @@ export const createStack = async (
     await apiInstance.post(`${practiceId}/resources`, { userId });
   } catch (err) {
     console.error(createErrorMessage('createStack', err));
+    throw Error('createStack');
   }
 };
 
@@ -84,6 +91,7 @@ export const deleteStack = async (
     });
   } catch (err) {
     console.error(createErrorMessage('deleteStack', err));
+    throw Error('deleteStack');
   }
 };
 
@@ -110,6 +118,7 @@ export const getConsoleUrl = async (
     return UrlResponseSchema.parse(res.data).ssoUrl;
   } catch (err) {
     console.error(createErrorMessage('getConsoleUrl', err));
+    throw Error('getConsoleUrl');
   }
 };
 
@@ -128,5 +137,26 @@ export const getGuide = async (practiceIdParam: unknown) => {
     return res.data;
   } catch (err) {
     console.error(createErrorMessage('getGuide', err));
+    throw Error('getGuide');
+  }
+};
+
+/**
+ * 해당 실습의 가이드 호출
+ * @param practiceId 실습 번호
+ */
+// 백엔드 api 생성 후 백엔드에서 텍스트 내려보내는 로직으로 변경 필요
+export const getPartialGuide = async (practiceIdParam: unknown, mdIdrParam : unknown) => {
+  try {
+    const practiceId = idSchema.parse(practiceIdParam);
+    const mdId = idSchema.parse(mdIdrParam);
+    const res = await axios.get(
+      `https://guide/practice${practiceId}/0${mdId}.md`,
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    return res.data;
+  } catch (err) {
+    console.error(createErrorMessage('getPartialGuide', err));
+    throw Error('getPartialGuide');
   }
 };

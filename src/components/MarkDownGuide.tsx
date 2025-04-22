@@ -2,19 +2,17 @@ import ReactMarkdown from 'react-markdown';
 import { PluggableList } from 'react-markdown/lib/react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-import useGuide from '../hooks/useGuide';
 
-const Guide = () => {
-  const guide = useGuide();
+const MarkDownGuide = ({mdText}:{mdText : string}) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw] as PluggableList}
-      className="min-w-[800px]"
+      skipHtml={true}
     >
-      {guide}
+      {mdText}
     </ReactMarkdown>
   );
 };
 
-export default Guide;
+export default MarkDownGuide;

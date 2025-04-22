@@ -1,5 +1,5 @@
 import { STORAGE } from '../constants';
-import { createErrorMessage } from './error';
+import { createErrorMessage } from './general';
 
 export const getRefreshToken = () => {
   return sessionStorage.getItem(STORAGE.REFRESH_TOKEN);

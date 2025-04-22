@@ -1,7 +1,7 @@
 const Title = () => {
   return (
-    <div className="center-container flex justify-center flex-grow text-nowrap">
-      Infra Camp
+    <div className="center-container">
+      Cloud DevOps Security (CDS) Camp
     </div>
   )
 }

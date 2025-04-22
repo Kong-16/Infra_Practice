@@ -6,6 +6,7 @@ import {
   StackStatusSchema,
 } from '../interfaces/stack.types';
 import { useEffect, useState } from 'react';
+import { copyToClipboard } from '../utils/general';
 
 const StackCard = ({
   status,
@@ -26,6 +27,9 @@ const StackCard = ({
         break;
       case StackStatusSchema.Values.ROLLBACK_IN_PROGRESS:
         setMessage('실습 환경 삭제 중...');
+        break;
+      case StackStatusSchema.Values.ROLLBACK_COMPLETE:
+        setMessage('실습 환경 삭제가 필요합니다.');
         break;
       case StackStatusSchema.Values.DOES_NOT_EXIST:
         setMessage('실습 환경이 생성되지 않았습니다.');
@@ -68,13 +72,12 @@ const StackCard = ({
     case StackStatusSchema.Values.CREATE_IN_PROGRESS:
     case StackStatusSchema.Values.DELETE_IN_PROGRESS:
     case StackStatusSchema.Values.ROLLBACK_IN_PROGRESS:
-      return <StackInProgress/>;
+      return <StackInProgress />;
     case StackStatusSchema.Values.CREATE_COMPLETE:
-      return <StackList/>;
+      return <StackList />;
     default:
-      return <NoStack/>;
+      return <NoStack />;
   }
-
 };
 
 export default StackCard;

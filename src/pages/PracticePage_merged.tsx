@@ -11,10 +11,10 @@ import useButtonHandler from '../hooks/useButtonHandler';
 import { createErrorMessage } from '../utils/general';
 import useStackInfoPoller from '../hooks/useStackInfoPoller';
 import { StackStatusSchema } from '../interfaces/stack.types';
+import Guide from '../components/Guide';
 import useStackStore from '../store/stackStore';
-import AccordionGuide from '../components/AccordionGuide';
 
-const PracticePage = () => {
+const PracticePage_m = () => {
   const { practiceId } = useParams();
   const { status, outputs: stackList, setStack, clearStack } = useStackStore();
   const { startPolling } = useStackInfoPoller();
@@ -58,7 +58,6 @@ const PracticePage = () => {
       case StackStatusSchema.Values.DOES_NOT_EXIST:
         return <StackCreateButton />;
       case StackStatusSchema.Values.CREATE_COMPLETE:
-      case StackStatusSchema.Values.ROLLBACK_COMPLETE:
         return <StackDeleteButton />;
       default:
         return <DisabledButton />;
@@ -93,13 +92,12 @@ const PracticePage = () => {
             <StackCard status={status} stackList={stackList} />
           </div>
         </div>
-        {/* <div className="guide-container flex flex-col min-w-f w-full prose p-20"> */}
-        <div className="guide-container flex min-w-[1000px] prose px-20">
-          <AccordionGuide />
+        <div className="guide-container flex flex-col min-w-f w-full prose p-20">
+          <Guide />
         </div>
       </div>
     </div>
   );
 };
 
-export default PracticePage;
+export default PracticePage_m;

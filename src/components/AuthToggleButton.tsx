@@ -1,30 +1,20 @@
 import { useAuth } from 'react-oidc-context';
-function AuthToggleButton() {
+import useUserStore from '../store/userStore';
+import { COGNITO_CONFIG } from '../constants';
+const AuthToggleButton = () => {
   const auth = useAuth();
-
-  /**
-   * 2024.12.16 공민혁
-   * 인증 필터 구현 시 메인페이지 / 로그인 페이지로 자동 리다이렉션 될 예정 이므로 현재는 필요 없는 기능이라 주석처리
-   */
-  // const signOutRedirect = () => {
-  //   const clientId = "4u15vsm6ire7311h2deaopj8lk";
-  //   const logoutUri = "http://localhost:5173";
-  //   const cognitoDomain = "https://<user pool domain>";
-  //   window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(logoutUri)}`;
-  // };
-
-  // if (auth.isAuthenticated) {
-  //   console.log('accessToken : ' + auth.user?.access_token);
-  //   console.log('refreshToken : ' + auth.user?.refresh_token);
-  // } else console.log('not logged in !');
+  const { clearUser } = useUserStore();
 
   /**
    * 로그아웃 로직 수행
    * store의 accessToken, sessionStorage의 refreshToken, useAuth의 로그인 정보 삭제
    */
-  const handleSignoutClick = () => {
-    sessionStorage.clear();
-    auth.removeUser();
+  const handleSignoutClick = async () => {
+    clearUser();
+    await auth.removeUser();
+    window.location.href = `${COGNITO_CONFIG.DOMAIN}/logout?client_id=${
+      COGNITO_CONFIG.CLIENT_ID
+    }&logout_uri=${encodeURIComponent(COGNITO_CONFIG.REDIRECT_URI)}`;
   };
 
   const AuthStatus = () => {
@@ -49,16 +39,13 @@ function AuthToggleButton() {
 
   const SignoutButton = () => (
     <div className="flex flex-nowrap items-center">
-      <button
-        className='button-reverse'
-        onClick={() => handleSignoutClick()}
-      >
+      <button className="button-reverse" onClick={() => handleSignoutClick()}>
         Sign out
       </button>
     </div>
   );
 
   return <AuthStatus />;
-}
+};
 
 export default AuthToggleButton;

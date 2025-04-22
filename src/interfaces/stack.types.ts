@@ -23,13 +23,8 @@ export const StackSchema = z.object({
   outputs: z.array(StackOutputSchema),
 });
 
-// export const StatusResponseSchema = z.object({
-//   success: z.boolean(),
-//   stackStatus: StackSchema,
-// });
 
 // 타입 추출
 export type StackStatus = z.infer<typeof StackStatusSchema>;
 export type StackOutput = z.infer<typeof StackOutputSchema>;
 export type Stack = z.infer<typeof StackSchema>;
-// export type StatusResponse = z.infer<typeof StatusResponseSchema>;

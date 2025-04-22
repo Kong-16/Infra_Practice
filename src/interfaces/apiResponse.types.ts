@@ -1,3 +1,6 @@
+/**
+ * api 응답 타입
+ */
 import { z } from "zod";
 import { StackSchema } from "./stack.types";
 

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import useUserStore from './store/userStore';
-import { createErrorMessage } from './utils/error';
+import { createErrorMessage } from './utils/general';
 
 const apiInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
@@ -35,10 +35,12 @@ apiInstance.interceptors.request.use((config) => {
 apiInstance.interceptors.response.use(
   // 성공 시 response 반환
   (response) => {
+    console.log(response);
     return response;
   },
   (error) => {
     const axiosError = error as AxiosError;
+    console.log(error);
     try {
       if (axiosError.config && axiosError.response?.status === 401) {
         if (axiosError.response.data === 'Expired Token') {

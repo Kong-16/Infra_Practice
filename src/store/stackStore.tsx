@@ -1,3 +1,6 @@
+/**
+ * 실습 환경 스토어
+ */
 import { create } from 'zustand';
 import {
   Stack,

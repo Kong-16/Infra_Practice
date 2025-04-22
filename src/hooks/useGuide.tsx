@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
 import { getGuide } from '../utils/api';
+import { createErrorMessage } from '../utils/general';
+import useStackStore from '../store/stackStore';
 
-const useGuide = (practiceId: string | undefined) => {
+const useGuide = () => {
+  const { practiceId } = useStackStore();
   const [guide, setGuide] = useState('');
 
+  useEffect(() => {
+    const asyncSetGuide = async () => {
+      if (!practiceId) {
+        console.error(
+          createErrorMessage('useGuide', 'practiceId not exists')
+        );
+        return;
+      }
+      const fetchedGuide = await getGuide(practiceId);
+      setGuide(fetchedGuide);
+    };
 
-  // 페이지 실행 시 한 번만 실행
-  useEffect(()=>{
-  const asyncSetGuide = async () => {
-    const guideText = await getGuide(practiceId);
-    setGuide(guideText);
-  };
     asyncSetGuide();
-  },[])
+  }, [practiceId]);
 
   return guide;
 };

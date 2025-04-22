@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from 'react-oidc-context';
-import { HashLoader } from 'react-spinners';
 import useUserStore from './store/userStore';
-import { createErrorMessage } from './utils/error';
+import { createErrorMessage } from './utils/general';
+import LoadingPage from './pages/LoadingPage';
 
 /**
  * Token 관리 및 갱신하는 Provider
@@ -15,32 +15,39 @@ const AuthStoreSyncProvider = ({ children }: { children: any }) => {
   const { setUser } = useUserStore();
 
   const syncToken = async () => {
-    // console.log(auth);
-    // 에러 시 로직 추가 필요
     if (auth.error) {
       console.error(createErrorMessage('syncToken', auth.error.message));
       return;
     }
-    if (auth.isLoading) return;
+    if (auth.isLoading) {
+      return;
+    }
     if (!auth.isAuthenticated) {
-      await auth.signinRedirect();
+      // setTimeout 하지 않을 경우 지워지지 않은 정보가 있어 바로 다시 로그인 되는 것으로 보임.
+      setTimeout(() => {
+        auth.signinRedirect();
+      }, 1000);
     } else {
       setUser('userId', auth.user?.profile['cognito:username']! as string);
       setUser('accessToken', auth.user?.access_token!);
     }
   };
 
-  // 상태 추적 대상 변경 가능성
+  // 로그인 상태가 아닌 경우 토큰 동기화 작업.
   useEffect(() => {
     syncToken();
   }, [auth.isLoading, auth.isAuthenticated]);
-  if (auth.isLoading) {
+
+  if (auth.isLoading || !auth.isAuthenticated) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <HashLoader color="#1e3a8a" />
-      </div>
+      <LoadingPage/>
     );
   }
+
+  // if(!auth.isAuthenticated) {
+  //   return <ErrorPage/>
+  // }
+
   return <div>{children}</div>;
 };
 
